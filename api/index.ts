@@ -34,7 +34,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
 
   const response = await fetch(url, {
     method: req.method,
-    headers: { ...req.headers, Host: null, host: null },
+    headers: { ...req.headers, Host: undefined, host: undefined },
     body: req.body ? JSON.stringify(req.body) : null,
   })
 
