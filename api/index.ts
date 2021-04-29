@@ -19,6 +19,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
       'Access-Control-Allow-Origin': 'https://carotte.netlify.app',
       'Access-Control-Allow-Methods': req.headers['Access-Control-Request-Method'],
       'Access-Control-Allow-Headers': req.headers['Access-Control-Request-Headers'],
+      'Access-Control-Allow-Credentials': 'true',
     }
     res.send()
     return
