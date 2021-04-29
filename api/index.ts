@@ -1,6 +1,11 @@
 import fetch from 'node-fetch'
 
-type VercelRequest = Request & { query: Record<string, string> }
+type VercelRequest = {
+  query: Record<string, string>
+  headers: Record<string, string>
+  method: string
+  body: any
+}
 
 type VercelResponse = {
   status: (status: number) => VercelResponse
@@ -12,8 +17,8 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   if (req.method === 'OPTIONS') {
     res.headers = {
       'Access-Control-Allow-Origin': 'https://carotte.netlify.app',
-      'Access-Control-Allow-Methods': req.headers.get('Access-Control-Request-Method'),
-      'Access-Control-Allow-Headers': req.headers.get('Access-Control-Request-Headers'),
+      'Access-Control-Allow-Methods': req.headers['Access-Control-Request-Method'],
+      'Access-Control-Allow-Headers': req.headers['Access-Control-Request-Headers'],
     }
     res.send()
     return
@@ -27,15 +32,9 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     return
   }
 
-  const headers = {}
-
-  req.headers.forEach((value, key) => {
-    headers[key] = value
-  })
-
   const response = await fetch(url, {
     method: req.method,
-    headers,
+    headers: req.headers,
     body: req.body ? JSON.stringify(req.body) : null,
   })
 
