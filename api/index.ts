@@ -34,10 +34,8 @@ export default async (req: VercelRequest, res: VercelResponse) => {
 
   const response = await fetch(url, {
     method: req.method,
-    headers: req.headers,
+    headers: { ...req.headers, host: null },
     body: req.body ? JSON.stringify(req.body) : null,
-    // @ts-ignore
-    rejectUnauthorized: false,
   })
 
   res.headers = {}
