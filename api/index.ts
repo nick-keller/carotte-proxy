@@ -32,11 +32,9 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     return
   }
 
-  delete req.headers.Host
-
   const response = await fetch(url, {
     method: req.method,
-    headers: req.headers,
+    headers: { Authorization: req.headers.Authorization },
     body: req.body ? JSON.stringify(req.body) : null,
   })
 
