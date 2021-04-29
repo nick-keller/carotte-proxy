@@ -14,13 +14,14 @@ type VercelResponse = {
 }
 
 export default async (req: VercelRequest, res: VercelResponse) => {
+  res.headers = {
+    'Access-Control-Allow-Origin': 'https://carotte.netlify.app',
+    'Access-Control-Allow-Methods': req.headers['Access-Control-Request-Method'],
+    'Access-Control-Allow-Headers': req.headers['Access-Control-Request-Headers'],
+    'Access-Control-Allow-Credentials': 'true',
+  }
+
   if (req.method === 'OPTIONS') {
-    res.headers = {
-      'Access-Control-Allow-Origin': 'https://carotte.netlify.app',
-      'Access-Control-Allow-Methods': req.headers['Access-Control-Request-Method'],
-      'Access-Control-Allow-Headers': req.headers['Access-Control-Request-Headers'],
-      'Access-Control-Allow-Credentials': 'true',
-    }
     res.send()
     return
   }
@@ -38,8 +39,6 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     headers: { Authorization: req.headers.Authorization },
     body: req.body ? JSON.stringify(req.body) : null,
   })
-
-  res.headers = {}
 
   response.headers.forEach((value, key) => {
     res.headers[key] = value
