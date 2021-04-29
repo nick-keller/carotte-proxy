@@ -18,6 +18,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   }
 
   const headers = {}
+
   req.headers.forEach((value, key) => {
     headers[key] = value
   })
