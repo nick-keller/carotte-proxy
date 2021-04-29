@@ -1,0 +1,13 @@
+{
+  "name": "carotte-proxy",
+  "version": "1.0.0",
+  "description": "Proxy for Carotte",
+  "main": "api/index.ts",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node-fetch": "^2.5.10",
+    "node-fetch": "^2.6.1"
+  }
+}
