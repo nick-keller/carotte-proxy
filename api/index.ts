@@ -36,6 +36,8 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     method: req.method,
     headers: req.headers,
     body: req.body ? JSON.stringify(req.body) : null,
+    // @ts-ignore
+    rejectUnauthorized: false,
   })
 
   res.headers = {}
