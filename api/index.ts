@@ -21,6 +21,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
 
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Headers', req.headers['access-control-request-headers'])
+    res.setHeader('Content-Length', '0')
     res.status(204).send()
     return
   }
@@ -39,7 +40,9 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   })
 
   response.headers.forEach((value, key) => {
-    res.setHeader(key, value)
+    if (key.toLowerCase() !== 'content-length') {
+      res.setHeader(key, value)
+    }
   })
 
   res.status(response.status).send(await response.text())
