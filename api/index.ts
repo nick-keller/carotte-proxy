@@ -39,11 +39,5 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     body: req.body ? JSON.stringify(req.body) : null,
   })
 
-  response.headers.forEach((value, key) => {
-    if (key.toLowerCase() !== 'content-length') {
-      res.setHeader(key, value)
-    }
-  })
-
   res.status(response.status).send(await response.text())
 }
