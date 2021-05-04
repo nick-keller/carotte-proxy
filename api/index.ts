@@ -35,7 +35,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
 
   const response = await fetch(url, {
     method: req.method,
-    headers: { Authorization: req.headers.Authorization },
+    headers: { Authorization: req.headers.authorization },
     body: req.body ? JSON.stringify(req.body) : null,
   })
 
