@@ -10,21 +10,19 @@ type VercelRequest = {
 type VercelResponse = {
   status: (status: number) => VercelResponse
   send: (body?: string) => void
-  headers?: Record<string, string>
+  setHeader: (name: string, value: string) => void
 }
 
 export default async (req: VercelRequest, res: VercelResponse) => {
-  res.headers = {
-    'Access-Control-Allow-Origin': 'https://carotte.netlify.app',
-    'Vary': 'Origin',
-    'Access-Control-Allow-Credentials': 'true',
-  }
+  res.setHeader('Access-Control-Allow-Origin', 'https://carotte.netlify.app')
+  res.setHeader('Vary', 'Origin')
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
 
   if (req.method === 'OPTIONS') {
-    res.headers['Access-Control-Allow-Methods'] = 'GET,HEAD,PUT,PATCH,POST,DELETE'
-    res.headers['Access-Control-Allow-Headers'] = req.headers['Access-Control-Request-Headers']
-    res.headers['Content-Length'] = '0'
-    res.headers['Vary'] = 'Origin,Access-Control-Request-Headers'
+    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE')
+    res.setHeader('Access-Control-Allow-Headers', req.headers['Access-Control-Request-Headers'])
+    res.setHeader('Content-Length', '0')
+    res.setHeader('Vary', 'Origin,Access-Control-Request-Headers')
 
     res.status(204).send()
     return
@@ -44,7 +42,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   })
 
   response.headers.forEach((value, key) => {
-    res.headers[key] = value
+    res.setHeader(key, value)
   })
 
   res.status(response.status).send(await response.text())
