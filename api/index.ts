@@ -15,15 +15,13 @@ type VercelResponse = {
 
 export default async (req: VercelRequest, res: VercelResponse) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://carotte.netlify.app')
-  res.setHeader('Vary', 'Origin')
   res.setHeader('Access-Control-Allow-Credentials', 'true')
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE')
+  res.setHeader('Access-Control-Allow-Headers', req.headers['access-control-request-headers'])
+  res.setHeader('Vary', 'Origin,Access-Control-Request-Headers')
 
   if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE')
-    res.setHeader('Access-Control-Allow-Headers', req.headers['access-control-request-headers'])
     res.setHeader('Content-Length', '0')
-    res.setHeader('Vary', 'Origin,Access-Control-Request-Headers')
-
     res.status(204).send()
     return
   }
