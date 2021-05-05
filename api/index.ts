@@ -26,14 +26,16 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     return
   }
 
-  const url = req.query.url
+  const { url, ...otherQueryParams } = req.query
 
   if (!url) {
     res.status(404).send()
     return
   }
 
-  const response = await fetch(url, {
+  const stringQueryParams = Object.entries(otherQueryParams).map(([key, value]) => `${key}=${value}`).join('&')
+
+  const response = await fetch(url + (stringQueryParams ? '&' + stringQueryParams : ''), {
     method: req.method,
     headers: { Authorization: req.headers.authorization },
     body: req.body ? JSON.stringify(req.body) : null,
